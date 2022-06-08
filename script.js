@@ -19,12 +19,17 @@ function showSuccess(input) {
 }
 
 //Check valid email
-function isValidEmail(email) {
+function checkEmail(input) {
   const re =
     /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-  return re.test(String(email).toLocaleLowerCase());
+  if (re.test(input.value.trim())) {
+    showSuccess(input);
+  } else {
+    showError(input, "Email is not valid");
+  }
 }
 
+//Check required
 function checkRequired(inputArr) {
   inputArr.forEach(function (input) {
     // console.log(input.value);
@@ -36,7 +41,7 @@ function checkRequired(inputArr) {
   });
 }
 
-//check lenghth
+//Check lenghth
 function checkLength(input, min, max) {
   if (input.value.length < min) {
     showError(
@@ -65,4 +70,5 @@ form.addEventListener("submit", function (e) {
   checkRequired([username, email, password, password2]);
   checkLength(username, 3, 15);
   checkLength(password, 6, 25);
+  checkEmail(email);
 });
